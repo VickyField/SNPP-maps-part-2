@@ -27,8 +27,8 @@
             "yAxisScaleDivisor":1,
             "yAxisBreak": false,
             "yAxisBreak_sm_md_lg": [65,65,65] ,
-			"numRows_sm_md_lg":[3,3,2],
-			"numColumns_sm_md_lg":[2,2,3],
+			"numRows_sm_md_lg":[2,1,1],
+			"numColumns_sm_md_lg":[1,2,2],
 			"breakDivisions":5,
             "breaks" : [[6,15,20,25,30,50],[6,15,20,25,30,50],[6,15,20,25,30,50],[6,15,20,25,30,50],[6,15,20,25,30,50],[6,15,20,25,30,50]]
     },

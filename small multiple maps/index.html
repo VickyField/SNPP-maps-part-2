@@ -270,7 +270,7 @@
 		
 		.zoom-container {
 		margin-left: 5px;
-		margin-top: 85px;
+		margin-top: 30px;
 		position: absolute;
 		left: 0px;
 		top: 0px;
@@ -382,6 +382,55 @@
 			font-weight:bold;
 		}
 		
+			#ChartFooterDiv, .footer {
+			font-weight:600!important;
+			font-size:14px!important;
+			line-height:24px!important;
+			margin: opx 0!important;
+			padding: 5px 0 3px 0!important;
+			font-family: Helvetica,sans-serif!important;
+			color: #414042!important;
+			box-sizing: border-box!important;
+			margin-top:8px;
+		}
+		
+		#submitbut {
+			background-color:#0F8243;
+			display:block;
+			width:200px;
+			text-align:center;
+			font-size:14px;
+			color:white;
+			font-weight:100;
+			text-decoration:underline;
+			width:70px;
+			height:43px;
+			padding-top:12px;
+			margin-right:6px;
+			float:left;
+		}
+		#submitbut:hover {
+			cursor:hand;
+			cursor:pointer;
+			display:block;
+			background-color:rgb(11,93,48)!important;
+			width:200px;
+			text-align:center;
+			font-size:14px;
+			color:white;
+			font-weight:100;
+			text-decoration:underline;
+			width:70px;
+			height:43px;
+			padding-top:12px;
+			margin-right:6px;
+			float:left;
+		}
+		#notesdiv {
+			width:480px;
+		}
+    
+		
     </style>
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -437,6 +486,13 @@
                 </div> 
             </div>
 		</div>
+        
+                    <div id="ChartFooterDiv">Download this chart</div>
+    
+            <a href="fallback.png" target="_blank"><div id="submitbut">Image</div></a>
+            <a href="data.csv" target="_blank"><div id="submitbut">.csv</div></a>
+            <a href="data.xls" target="_blank"><div id="submitbut">.xls</div></a>
+
         </div>       
 
         <script src="../lib/jquery-1.11.1.min.js"></script>
@@ -642,10 +698,23 @@
 				
 						createKey(k , graph_unitWidth, graph_unitHeight , margin , innerPadding);							
 						
+						
+						if (graphic.width() < threshold_sm) { 
+							d3.select("#svg4").remove();
+							d3.select("#svg5").remove();	
+						} else if (graphic.width() < threshold_md) { 
+							d3.select("#svg4").remove();
+							d3.select("#svg5").remove();
+							d3.select("#svg0").select("#key").remove();
+							d3.select("#svg2").select("#key").remove(); 	
+						} else { 
+							d3.select("#svg4").remove();
+							d3.select("#svg5").remove();
+							d3.select("#svg0").select("#key").remove();
+							d3.select("#svg2").select("#key").remove(); 
+							}
 								
-	/*					if (graphic.width() < threshold_sm) { d3.selectAll(".keys").style("display", "inline"); }
-						else if (graphic.width() < threshold_md) { d3.selectAll(".keys").style("display", "inline"); }
-						else { */d3.selectAll(".keys").style("display", "inline"); //}
+	
 							
 					
 						// Use the normal d3 pattern - select all path elements (even though they haven't yet been created)
@@ -733,7 +802,7 @@
 				d3.select("#footer").append("p")
 					.text("Source: ")
 					.append("a")
-					.attr("href", "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections/bulletins/subnationalpopulationprojectionsforengland/2014-05-29")
+					.attr("href", "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections/bulletins/subnationalpopulationprojectionsforengland/2016-05-25")
 					.attr("target", "_blank")
 					.html("2014-based Subnational Population Projections, ONS");
 			
@@ -868,7 +937,7 @@
 					.attr("pointer-events", "none")
 					.style("fill", "none")
 					.style("stroke", function(d){
-							if(area.substr(0,1)=="E" || area.substr(0,1)=="W"){
+							if(area.substr(0,1)=="E"){
 									return "orange"
 							}
 						})
@@ -876,7 +945,7 @@
 					
 			details = d3.select("#details")
 			
-			if(area.substr(0,1)=="E" || area.substr(0,1)=="W"){
+			if(area.substr(0,1)=="E"){
 				d3.select("#areanm").text(name);
 			}
 		}
@@ -1059,7 +1128,8 @@
 			
 
 			function createKey(k, graph_unitWidth, graph_unitHeight, margin, innerPadding){
-				
+
+						
 /*
 				var svgkey = d3.select("#map")
 					.append("svg")
@@ -1102,7 +1172,7 @@
 		
 				y = d3.scale.linear()
 					.domain([breaks[0], breaks[dvc.essential.breakDivisions]]) /*range for data*/
-					.range([graph_unitHeight-100, 0]); /*range for pixels*/
+					.range([graph_unitHeight-120, 0]); /*range for pixels*/
 		
 				key_svg =$("#key_svg").width()
 		
@@ -1160,10 +1230,7 @@
 				
 				g.call(yAxis).append("text");
 
-					d3.select("#svg4").remove();
-					d3.select("#svg5").remove();
-					d3.select("#svg0").select("#key").remove();
-					d3.select("#svg2").select("#key").remove();
+	
 
 				
 //				g2.selectAll("rect")
@@ -1303,7 +1370,7 @@
 			var areanames =  dvc.data.map(function(d) { return d.AREANM; })
 			
 			var menuarea = d3.zip(areanames,areacodes).sort(function(a, b){ return d3.ascending(a[0], b[0]); }).	filter(function(d){  				
-				return d[1].substr(0,1) == "E" || d[1].substr(0,1) == "W"
+				return d[1].substr(0,1) == "E" 
 			})
 			
 						
